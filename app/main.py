@@ -2,12 +2,21 @@ from fastapi import FastAPI
 from fastapi import Request
 import requests
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
 
 app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Hello, AI Code Review Assistant!"}
+    return {"message": "Hello, AI Code Review Assistant! This is testing."}
 
 @app.post("/webhook")
 async def handle_webhook(request: Request):
@@ -18,7 +27,7 @@ async def handle_webhook(request: Request):
 
     if action == "opened":
         # Fetch PR details
-        pr_details = get_pull_request_details(repo, pr_number, "YOUR_GITHUB_TOKEN")
+        pr_details = get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
         files = pr_details.get("files", [])
 
         # Analyze each file
@@ -27,7 +36,7 @@ async def handle_webhook(request: Request):
             analysis = analyze_code(code)
             # Interpret analysis and create a comment
             comment = f"Analysis for {file.get('filename')}: {analysis}"
-            post_comment(repo, pr_number, comment, "YOUR_GITHUB_TOKEN")
+            post_comment(repo, pr_number, comment, GITHUB_TOKEN)
 
     return {"status": "processed"}
 

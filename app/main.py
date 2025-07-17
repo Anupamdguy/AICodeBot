@@ -23,11 +23,11 @@ async def root():
 async def handle_webhook(request: Request):
     payload = await request.json()
     logging.info(f"Received webhook payload: {payload}")
-    action = payload.get("action")
+    state = payload.get("state")
     pr_number = payload.get("number")
     repo = payload.get("repository", {}).get("full_name")
 
-    if action == "opened":
+    if state == "open":
         # Fetch PR details
         pr_details = get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
         files = pr_details.get("files", [])

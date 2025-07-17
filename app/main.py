@@ -16,7 +16,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Hello, AI Code Review Assistant! This is testing2."}
+    return {"message": "Hello, AI Code Review Assistant! This is testing3."}
 
 @app.post("/webhook")
 async def handle_webhook(request: Request):

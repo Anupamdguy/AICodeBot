@@ -4,6 +4,7 @@ import requests
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from dotenv import load_dotenv
 import os
+import logging
 
 load_dotenv()
 
@@ -21,6 +22,7 @@ async def root():
 @app.post("/webhook")
 async def handle_webhook(request: Request):
     payload = await request.json()
+    logging.info(f"Received webhook payload: {payload}")
     action = payload.get("action")
     pr_number = payload.get("number")
     repo = payload.get("repository", {}).get("full_name")

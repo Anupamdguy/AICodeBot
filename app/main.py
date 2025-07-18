@@ -46,6 +46,21 @@ async def handle_webhook(request: Request):
             post_comment(repo, pr_number, comment, GITHUB_TOKEN)
             print(f"Comment posted for {file.get('filename')}: {comment}")
 
+    if action == "synchronize":
+        # Fetch PR details'
+        print("Inside synchronize")
+        pr_details = get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
+        files = pr_details.get("files", [])
+
+        # Analyze each file
+        for file in files:
+            code = file.get("patch")
+            analysis = analyze_code(code)
+            # Interpret analysis and create a comment
+            comment = f"Analysis for {file.get('filename')}: {analysis}"
+            post_comment(repo, pr_number, comment, GITHUB_TOKEN)
+            print(f"Comment posted for {file.get('filename')}: {comment}")
+
     return {"status": "processed"}
 
 def get_pull_request_details(repo, pr_number, token):

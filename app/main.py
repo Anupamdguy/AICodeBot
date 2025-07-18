@@ -43,6 +43,7 @@ async def handle_webhook(request: Request):
             # Interpret analysis and create a comment
             comment = f"Analysis for {file.get('filename')}: {analysis}"
             post_comment(repo, pr_number, comment, GITHUB_TOKEN)
+            print(f"Comment posted for {file.get('filename')}: {comment}")
 
     return {"status": "processed"}
 

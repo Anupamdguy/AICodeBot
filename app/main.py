@@ -32,7 +32,8 @@ async def handle_webhook(request: Request):
     repo = payload.get("repository", {}).get("full_name")
 
     if action == "opened":
-        # Fetch PR details
+        # Fetch PR details'
+        print("Inside opened")
         pr_details = get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
         files = pr_details.get("files", [])
 

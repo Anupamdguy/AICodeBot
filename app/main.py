@@ -24,9 +24,10 @@ async def root():
 @app.post("/webhook")
 async def handle_webhook(request: Request):
     payload = await request.json()
-
-    with open('webhook_payload.json', 'w') as json_file:
-        json.dump(payload, json_file, indent=4)
+    
+    # Debugging: Log the entire payload
+    with open('payload_debug.json', 'w') as debug_file:
+        json.dump(payload, debug_file, indent=4)
 
     action = payload.get("action")
     pr_number = payload.get("number")
@@ -38,8 +39,12 @@ async def handle_webhook(request: Request):
 
     if action == "opened":
         # Fetch PR details'
-        print("Inside opened")
         pr_details = get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
+        
+        # Debugging: Log the PR details
+        with open('pr_details_debug.json', 'w') as debug_file:
+            json.dump(pr_details, debug_file, indent=4)
+
         files = pr_details.get("files", [])
         with open('output2.txt', 'w') as file:
             file.write(f"Files: {files}\n")
@@ -50,12 +55,17 @@ async def handle_webhook(request: Request):
             # Interpret analysis and create a comment
             comment = f"Analysis for {file.get('filename')}: {analysis}"
             post_comment(repo, pr_number, comment, GITHUB_TOKEN)
-            print(f"Comment posted for {file.get('filename')}: {comment}")
+            with open('output4.txt', 'w') as file:
+                file.write(f"Files: {files}\n")
 
     if action == "synchronize":
         # Fetch PR details'
-        print("Inside synchronize")
         pr_details = get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
+        
+        # Debugging: Log the PR details
+        with open('pr_details_debug.json', 'w') as debug_file:
+            json.dump(pr_details, debug_file, indent=4)
+
         files = pr_details.get("files", [])
         with open('output3.txt', 'w') as file:
             file.write(f"Files: {files}\n")
@@ -67,7 +77,8 @@ async def handle_webhook(request: Request):
             # Interpret analysis and create a comment
             comment = f"Analysis for {file.get('filename')}: {analysis}"
             post_comment(repo, pr_number, comment, GITHUB_TOKEN)
-            print(f"Comment posted for {file.get('filename')}: {comment}")
+            with open('output5.txt', 'w') as file:
+                file.write(f"Files: {files}\n")
 
     return {"status": "processed"}
 

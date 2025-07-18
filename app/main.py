@@ -83,7 +83,7 @@ async def handle_webhook(request: Request):
     return {"status": "processed"}
 
 def get_pull_request_details(repo, pr_number, token):
-    url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}"
+    url = f"https://api.github.com/repos/{repo}/pull/{pr_number}"
     headers = {"Authorization": f"token {token}"}
     response = requests.get(url, headers=headers)
     return response.json()

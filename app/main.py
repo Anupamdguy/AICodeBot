@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import os
 import logging
 import json
+import sys
 
 load_dotenv()
 
@@ -13,6 +14,8 @@ GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 
 model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
+
+sys.stdout = open('output.log', 'w')
 
 app = FastAPI()
 
@@ -30,6 +33,7 @@ async def handle_webhook(request: Request):
     action = payload.get("action")
     pr_number = payload.get("number")
     repo = payload.get("repository", {}).get("full_name")
+    
 
     if action == "opened":
         # Fetch PR details'

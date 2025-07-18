@@ -57,6 +57,8 @@ async def handle_webhook(request: Request):
         print("Inside synchronize")
         pr_details = get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
         files = pr_details.get("files", [])
+        with open('output3.txt', 'w') as file:
+            file.write(f"Files: {files}\n")
 
         # Analyze each file
         for file in files:

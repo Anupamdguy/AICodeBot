@@ -86,6 +86,7 @@ def get_pull_request_details(repo, pr_number, token):
     url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}"
     headers = {"Authorization": f"token {token}"}
     response = requests.get(url, headers=headers)
+    print("I am at A")
     return response.json()
 
 def post_comment(repo, pr_number, comment, token):
@@ -93,6 +94,7 @@ def post_comment(repo, pr_number, comment, token):
     headers = {"Authorization": f"token {token}"}
     data = {"body": comment}
     response = requests.post(url, headers=headers, json=data)
+    print("I am at B")
     return response.json()
 
 def analyze_code(code):

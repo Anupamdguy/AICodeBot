@@ -72,11 +72,12 @@ async def handle_webhook(request: Request):
 
         # Analyze each file
         for file in files:
-            print(type(file))
+            print(type(files))
             # code = file.get("patch")
             # analysis = analyze_code(code)
             # Interpret analysis and create a comment
             # comment = f"Analysis for {file.get('filename')}: {analysis}"
+            comment = "testing from the code"
             post_comment(repo, pr_number, comment, GITHUB_TOKEN)
             with open('output5.txt', 'w') as file:
                 file.write(f"Comment: {comment}\n")

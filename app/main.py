@@ -72,7 +72,7 @@ async def handle_webhook(request: Request):
 
         # Analyze each file
         for file in files:
-            print(type(files))
+            print(file)
             # code = file.get("patch")
             # analysis = analyze_code(code)
             # Interpret analysis and create a comment

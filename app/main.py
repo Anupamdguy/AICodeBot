@@ -78,7 +78,7 @@ async def handle_webhook(request: Request):
             comment = f"Analysis for {file.get('filename')}: {analysis}"
             post_comment(repo, pr_number, comment, GITHUB_TOKEN)
             with open('output5.txt', 'w') as file:
-                file.write(f"Files: {files}\n")
+                file.write(f"Comment: {comment}\n")
 
     return {"status": "processed"}
 

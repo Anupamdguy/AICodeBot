@@ -86,7 +86,6 @@ def get_pull_request_details(repo, pr_number, token):
     url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}"
     headers = {"Authorization": f"token {token}"}
     response = requests.get(url, headers=headers)
-    print("I am at A")
     return response.json()
 
 def post_comment(repo, pr_number, comment, token):

@@ -97,7 +97,8 @@ def get_pull_request_details(repo, pr_number, token):
 
     # Add files to the pull request details
     pr_details['files'] = files
-
+    with open('pr_details.json', 'w') as file:
+        json.dump(pr_details, file, indent=4)
     return pr_details
 
 def post_comment(repo, pr_number, comment, token):

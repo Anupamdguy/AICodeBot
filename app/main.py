@@ -86,7 +86,17 @@ def get_pull_request_details(repo, pr_number, token):
     url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}"
     headers = {"Authorization": f"token {token}"}
     response = requests.get(url, headers=headers)
-    return response.json()
+    pr_details = response.json()
+
+    # Fetch files changed in the pull request
+    files_url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}/files"
+    files_response = requests.get(files_url, headers=headers)
+    files = files_response.json()
+
+    # Add files to the pull request details
+    pr_details['files'] = files
+
+    return pr_details
 
 def post_comment(repo, pr_number, comment, token):
     url = f"https://api.github.com/repos/{repo}/issues/{pr_number}/comments"

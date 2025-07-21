@@ -6,14 +6,11 @@ from dotenv import load_dotenv
 import os
 import logging
 import json
-from services.github_service import get_pull_request_details, post_comment, analyze_code
+from .services.github_service import get_pull_request_details, post_comment, analyze_code
 
 load_dotenv()
 
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
-
-model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
 
 
 app = FastAPI()
@@ -33,10 +30,6 @@ async def handle_webhook(request: Request):
     action = payload.get("action")
     pr_number = payload.get("number")
     repo = payload.get("repository", {}).get("full_name")
-    with open('output1.txt', 'w') as file:
-        file.write(f"Action: {action}\n")
-        file.write(f"PR Number: {pr_number}\n")
-        file.write(f"Repo: {repo}\n")
 
     if action == "opened":
         # Fetch PR details'
@@ -47,8 +40,6 @@ async def handle_webhook(request: Request):
             json.dump(pr_details, debug_file, indent=4)
 
         files = pr_details.get("files", [])
-        with open('output2.txt', 'w') as file:
-            file.write(f"Files: {files}\n")
         # Analyze each file
         for file in files:
             code = file.get("patch")
@@ -68,8 +59,6 @@ async def handle_webhook(request: Request):
             json.dump(pr_details, debug_file, indent=4)
 
         files = pr_details.get("files", [])
-        with open('output3.txt', 'w') as file:
-            file.write(f"Files: {files}\n")
 
         # Analyze each file
         for file in files:
@@ -78,9 +67,8 @@ async def handle_webhook(request: Request):
             # analysis = analyze_code(code)
             # Interpret analysis and create a comment
             # comment = f"Analysis for {file.get('filename')}: {analysis}"
-            comment = "testing from the code"
             post_comment(repo, pr_number, comment, GITHUB_TOKEN)
-            with open('output5.txt', 'w') as file:
-                file.write(f"Comment: {comment}\n")
+            # with open('output5.txt', 'w') as file:
+            #     file.write(f"Comment: {comment}\n")
 
     return {"status": "processed"}

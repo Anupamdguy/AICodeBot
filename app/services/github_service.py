@@ -3,10 +3,7 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import os
 import json
 
-# Load environment variables
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
-# Initialize tokenizer and model
 model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
 tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 

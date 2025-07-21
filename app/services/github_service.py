@@ -34,6 +34,8 @@ def post_comment(repo, pr_number, comment, token):
     headers = {"Authorization": f"token {token}"}
     data = {"body": comment}
     response = requests.post(url, headers=headers, json=data)
+    with open('post_comment.json', 'w') as file:
+        json.dump(response.json(), file, indent=4)
     print("I am at B")
     return response.json()
 

@@ -7,7 +7,7 @@ The AI Code Review Assistant is a GitHub bot powered by a large language model (
 - **Backend**: Python (FastAPI)
 - **AI**: Hugging Face Transformers
 - **DevOps**: Docker, GitHub Actions
-- **Tools**: LangChain, GitHub API
+- **Tools**: GitHub API
 
 ## Core Features
 - Automatically reviews code when a pull request is opened

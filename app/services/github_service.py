@@ -31,6 +31,9 @@ async def post_comment(repo, pr_number, comment, token):
     url = f"https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
     headers = {"Authorization": f"Bearer {token}"}
     data = {"body": comment}
+    print(url)
+    print(headers)
+    print(data)
     async with httpx.AsyncClient() as client:
         response = await client.post(url, headers=headers, json=data)
     with open('post_comment.json', 'w') as file:

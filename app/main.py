@@ -1,12 +1,10 @@
 from fastapi import FastAPI
 from fastapi import Request
-import requests
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from dotenv import load_dotenv
 import os
-import logging
 import json
 from .services.github_service import get_pull_request_details, post_comment, analyze_code
+
 
 load_dotenv()
 

@@ -31,7 +31,7 @@ async def handle_webhook(request: Request):
 
     if action == "opened":
         # Fetch PR details'
-        pr_details = get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
+        pr_details = await get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
         
         # Debugging: Log the PR details
         with open('pr_details_debug.json', 'w') as debug_file:
@@ -44,13 +44,13 @@ async def handle_webhook(request: Request):
             analysis = analyze_code(code)
             # Interpret analysis and create a comment
             comment = f"Analysis for {file.get('filename')}: {analysis}"
-            post_comment(repo, pr_number, comment, GITHUB_TOKEN)
+            await post_comment(repo, pr_number, comment, GITHUB_TOKEN)
             with open('output4.txt', 'w') as file:
                 file.write(f"Files: {files}\n")
 
     if action == "synchronize":
         # Fetch PR details'
-        pr_details = get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
+        pr_details = await get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
         
         # Debugging: Log the PR details
         with open('pr_details_debug.json', 'w') as debug_file:
@@ -66,7 +66,7 @@ async def handle_webhook(request: Request):
             # Interpret analysis and create a comment
             # comment = f"Analysis for {file.get('filename')}: {analysis}"
             comment = "testing from the code"
-            post_comment(repo, pr_number, comment, GITHUB_TOKEN)
+            await post_comment(repo, pr_number, comment, GITHUB_TOKEN)
             with open('output5.txt', 'w') as file:
                 file.write(f"Comment: {comment}\n")
 

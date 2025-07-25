@@ -9,6 +9,7 @@ from .services.github_service import get_pull_request_details, post_comment, ana
 load_dotenv()
 
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+print(GITHUB_TOKEN)
 
 app = FastAPI()
 

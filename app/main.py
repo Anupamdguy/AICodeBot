@@ -10,7 +10,6 @@ load_dotenv()
 
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
-
 app = FastAPI()
 
 @app.get("/")
@@ -42,7 +41,6 @@ async def handle_webhook(request: Request):
         for file in files:
             code = file.get("patch")
             analysis = analyze_code(code)
-            # Interpret analysis and create a comment
             comment = f"Analysis for {file.get('filename')}: {analysis}"
             await post_comment(repo, pr_number, comment, GITHUB_TOKEN)
             with open('output4.txt', 'w') as file:
@@ -60,10 +58,8 @@ async def handle_webhook(request: Request):
 
         # Analyze each file
         for file in files:
-            print(file)
             # code = file.get("patch")
             # analysis = analyze_code(code)
-            # Interpret analysis and create a comment
             # comment = f"Analysis for {file.get('filename')}: {analysis}"
             comment = "testing from the code"
             await post_comment(repo, pr_number, comment, GITHUB_TOKEN)

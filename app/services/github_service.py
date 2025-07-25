@@ -14,7 +14,7 @@ model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
 tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 
 
-async def get_pull_request_details(repo, pr_number, token):
+async def get_pull_request_details(repo, pr_number, token=token):
     print(token)
     url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}"
     headers = {"Authorization": f"Bearer {token}"}

@@ -2,6 +2,12 @@ import requests
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import json
 import httpx
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+token = os.getenv("GITHUB_TOKEN")
 
 
 model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")

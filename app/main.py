@@ -6,10 +6,6 @@ import json
 from .services.github_service import get_pull_request_details, post_comment, analyze_code
 
 
-load_dotenv()
-
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
-
 app = FastAPI()
 
 @app.get("/")
@@ -19,7 +15,9 @@ async def root():
 @app.post("/webhook")
 async def handle_webhook(request: Request):
     payload = await request.json()
+    load_dotenv()
 
+    GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
     
     # Debugging: Log the entire payload
     with open('payload_debug.json', 'w') as debug_file:

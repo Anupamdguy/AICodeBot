@@ -51,8 +51,6 @@ async def handle_webhook(request: Request):
     if action == "synchronize":
         # Fetch PR details'
         pr_details = await get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
-        with open('output_tk.txt', 'w') as file:
-            file.write(f"Token3: {GITHUB_TOKEN}\n")
         # Debugging: Log the PR details
         with open('pr_details_debug.json', 'w') as debug_file:
             json.dump(pr_details, debug_file, indent=4)

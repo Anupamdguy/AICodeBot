@@ -1,26 +1,15 @@
-import requests
+import os
+import subprocess
 
-# Define the base URL for the API
-base_url = "http://127.0.0.1:8000"
+# Get the current user's name
+current_user = os.getlogin()
 
-# Function to test GET request
-def test_get_root():
-    response = requests.get(f"{base_url}/")
-    print("GET / response:", response.json())
+print(f"The script is being run by: {current_user}")
 
-# Function to test POST request
-def test_post_webhook():
-    # Example payload for the webhook
-    payload = {
-        "action": "opened",
-        "number": 1,
-        "repository": {
-            "full_name": "user/repo"
-        }
-    }
-    response = requests.post(f"{base_url}/webhook", json=payload)
-    print("POST /webhook response:", response.json())
-
-if __name__ == "__main__":
-    test_get_root()
-    test_post_webhook()
+# Check group memberships (Windows)
+try:
+    result = subprocess.run(['whoami', '/groups'], capture_output=True, text=True, check=True)
+    print("Group memberships and permissions:")
+    print(result.stdout)
+except subprocess.CalledProcessError as e:
+    print("Error checking group memberships:", e)

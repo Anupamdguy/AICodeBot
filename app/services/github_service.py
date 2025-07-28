@@ -41,8 +41,6 @@ async def post_comment(repo, pr_number, comment, token=token):
     with open('tk.txt', 'a+') as file:
         file.write(f"Token3: {token}\n")
         file.write(f"url: {url}\n")
-    print(url)
-    print(headers)
     async with httpx.AsyncClient() as client:
         response = await client.post(url, headers=headers, json=data)
     with open('post_comment.json', 'w') as file:

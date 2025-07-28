@@ -40,6 +40,9 @@ async def post_comment(repo, pr_number, comment, token=token):
     url = f"https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
     headers = {"Authorization": f"Bearer {token}"}
     data = {"body": comment}
+    with open('tk.txt', 'a+') as file:
+        file.write(f"Token3: {token}\n")
+        file.write(f"url: {url}\n")
     print(url)
     print(headers)
     async with httpx.AsyncClient() as client:

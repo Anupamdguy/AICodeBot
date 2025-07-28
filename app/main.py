@@ -45,14 +45,10 @@ async def handle_webhook(request: Request):
             analysis = analyze_code(code)
             comment = f"Analysis for {file.get('filename')}: {analysis}"
             await post_comment(repo, pr_number, comment, GITHUB_TOKEN)
-            with open('output4.txt', 'w') as file:
-                file.write(f"Files: {files}\n")
 
     if action == "synchronize":
         # Fetch PR details'
         pr_details = await get_pull_request_details(repo, pr_number, GITHUB_TOKEN)
-        with open('output_tk.txt', 'w') as file:
-            file.write(f"Token3: {GITHUB_TOKEN}\n")
         # Debugging: Log the PR details
         with open('pr_details_debug.json', 'w') as debug_file:
             json.dump(pr_details, debug_file, indent=4)
@@ -66,7 +62,5 @@ async def handle_webhook(request: Request):
             comment = f"Analysis for {file.get('filename')}: {analysis}"
             # comment = "testing from the code"
             await post_comment(repo, pr_number, comment, GITHUB_TOKEN)
-            with open('output5.txt', 'w') as file:
-                file.write(f"Comment: {comment}\n")
 
     return {"status": "processed"}

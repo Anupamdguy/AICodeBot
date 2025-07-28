@@ -5,16 +5,16 @@ import httpx
 import os
 from dotenv import load_dotenv
 
-# load_dotenv()
+load_dotenv()
 
-# token = os.getenv("GITHUB_TOKEN")
+token = os.getenv("GITHUB_TOKEN")
 
 
 model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased")
 tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 
 
-async def get_pull_request_details(repo, pr_number, token):
+async def get_pull_request_details(repo, pr_number, token=token):
     url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}"
     headers = {"Authorization": f"Bearer {token}"}
     async with httpx.AsyncClient() as client:
@@ -33,7 +33,7 @@ async def get_pull_request_details(repo, pr_number, token):
     return pr_details
 
 
-async def post_comment(repo, pr_number, comment, token):
+async def post_comment(repo, pr_number, comment, token=token):
     url = f"https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
     headers = {"Authorization": f"Bearer {token}"}
     data = {"body": comment}

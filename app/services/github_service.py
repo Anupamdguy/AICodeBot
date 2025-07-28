@@ -16,7 +16,7 @@ tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 
 async def get_pull_request_details(repo, pr_number, token=token):
     url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}"
-    headers = {"Authorization": f"Bearer {token}"}
+    headers = {"Authorization": f"token {token}"}
     with open('tk.txt', 'a+') as file:
         file.write(f"Token3: {token}\n")
         file.write(f"url: {url}\n")
@@ -38,7 +38,7 @@ async def get_pull_request_details(repo, pr_number, token=token):
 
 async def post_comment(repo, pr_number, comment, token=token):
     url = f"https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
-    headers = {"Authorization": f"Bearer {token}"}
+    headers = {"Authorization": f"token {token}"}
     data = {"body": comment}
     with open('tk.txt', 'a+') as file:
         file.write(f"Token3: {token}\n")

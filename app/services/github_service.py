@@ -17,6 +17,9 @@ tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 async def get_pull_request_details(repo, pr_number, token=token):
     url = f"https://api.github.com/repos/{repo}/pulls/{pr_number}"
     headers = {"Authorization": f"Bearer {token}"}
+    with open('tk.txt', 'a+') as file:
+        file.write(f"Token3: {token}\n")
+        file.write(f"url: {url}\n")
     async with httpx.AsyncClient() as client:
         response = await client.get(url, headers=headers)
         pr_details = response.json()
